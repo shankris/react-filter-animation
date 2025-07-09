@@ -1,16 +1,106 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   background-color: #cfcfcf;
 }
 
+/* App container */
 .app {
   text-align: center;
   max-width: 100%;
   margin: 0 auto;
   background-color: #cfcfcf;
+  padding-top: 60px;
+  /* space for fixed header */
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+}
+
+/* Optional hamburger for mobile */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(100vh - 50px);
+  /* subtract header height */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: calc(100vh - 50px);
+  position: fixed;
+  top: 50px;
+  left: 0;
+  padding: 0;
+  flex-shrink: 0;
+  background-color: #ddd;
+  transition: transform 0.3s ease;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 220px;
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    /* top: 60px; */
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 50px);
+    background-color: #ddd;
+    transform: translateX(-100%);
+    z-index: 999;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
 }
 
 /* Button Filters */
@@ -42,12 +132,11 @@ body {
   color: white;
 }
 
-/* Grid Container */
+/* Movie Grid */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  /* padding: 2rem; */
+  gap: 8px;
   justify-items: center;
 }
 
@@ -56,7 +145,6 @@ body {
   max-width: 96%;
   margin: 0 auto;
 }
-
 
 /* Movie Card */
 .image-card {
@@ -67,20 +155,20 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  background: #000;
 }
 
-.image-card:hover {
+/* .image-card:hover {
   transform: translateY(-4px);
-}
+} */
 
-/* Image Container */
 .image-wrapper {
   position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
 }
 
-/* Low-res blurred placeholder */
+/* Images */
 .low-res {
   width: 100%;
   height: 100%;
@@ -88,7 +176,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* High-res real image */
 .high-res {
   position: relative;
   width: 100%;
@@ -103,7 +190,7 @@ body {
   opacity: 1;
 }
 
-/* Movie title */
+/* Movie Title */
 .image-card .title {
   padding: 6px;
   font-size: 14px;
@@ -114,42 +201,9 @@ body {
   text-align: left;
 }
 
-.layout {
-  display: flex;
-  align-items: flex-start;
-}
-
-.sidebar {
-  width: 220px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 60px 0 0 0;
-  flex-shrink: 0;
-  background-color: #ddd;
-}
-
-.main-content {
-  margin-left: 220px;
-  /* same as .sidebar width */
-  padding: 2rem;
-  flex: 1;
-}
-
-@media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    position: relative;
-    width: 100%;
-    order: 1;
-  }
-
-  .main-content {
-    order: 2;
-    margin-left: 0;
-  }
-}
+/* .container {
+  width: 1900px;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 1rem;
+} */

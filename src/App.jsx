@@ -2,13 +2,15 @@ import { AnimatePresence } from "framer-motion";
 import { useEffect, useState, createContext } from "react";
 import ButtonFilters from "./components/ButtonFilters";
 import Movies from "./components/Movies";
-import "./App.css"; // <-- Ensure this is where your styles live
+import Header from "./components/Header";
+import "./App.css";
 
 export const MovieContext = createContext();
 
 function App() {
   const [popularMovies, setPopularMovies] = useState([]);
   const [filteredMovie, setFilteredMovie] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(false); // ← Toggle for mobile sidebar
 
   useEffect(() => {
     const fetchLocalMovies = async () => {
@@ -26,17 +28,27 @@ function App() {
     setFilteredMovie,
   };
 
+  const handleToggleSidebar = () => {
+    setShowSidebar((prev) => !prev);
+  };
+
   return (
     <MovieContext.Provider value={value}>
       <div className='app'>
-        {/* Full-width header */}
-        <header className='header'>🎬 200 Movies</header>
+        <Header onToggleSidebar={handleToggleSidebar} />
 
-        {/* Main layout below the header */}
-        <div className='layout'>
-          <aside className='sidebar'>
+        {showSidebar && (
+          <div
+            className='overlay'
+            onClick={handleToggleSidebar}
+          ></div>
+        )}
+
+        <div className={`layout ${showSidebar ? "sidebar-open" : ""}`}>
+          <aside className={`sidebar ${showSidebar ? "show" : ""}`}>
             <ButtonFilters />
           </aside>
+
           <main className='main-content'>
             <AnimatePresence>
               <Movies />

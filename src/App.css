@@ -27,7 +27,6 @@
 .sidebar {
   width: 220px;
   background-color: #ddd;
-  padding: 1rem;
   flex-shrink: 0;
   overflow-y: auto;
 }
@@ -36,4 +35,24 @@
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* semi-transparent black */
+  z-index: 900;
+  /* below the sidebar which is z-index: 1000 */
+  /* display: none; */
+}
+
+/* Show overlay when sidebar is open below 768px */
+@media (max-width: 768px) {
+  .sidebar-open .overlay {
+    display: block;
+  }
 }
