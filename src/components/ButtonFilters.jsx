@@ -11,7 +11,34 @@ const ButtonFilters = () => {
   const [activeGenre, setActiveGenre] = useState("All");
   const [activeLanguage, setActiveLanguage] = useState("All");
 
-  // Extract unique genres and languages
+  // Compute filter counts dynamically
+  const computeGenreCounts = () => {
+    const genreMap = {};
+
+    popularMovies.forEach((movie) => {
+      if (activeLanguage === "All" || movie.Language === activeLanguage) {
+        genreMap[movie.Genre] = (genreMap[movie.Genre] || 0) + 1;
+      }
+    });
+
+    return { All: popularMovies.filter((m) => activeLanguage === "All" || m.Language === activeLanguage).length, ...genreMap };
+  };
+
+  const computeLanguageCounts = () => {
+    const langMap = {};
+
+    popularMovies.forEach((movie) => {
+      if (activeGenre === "All" || movie.Genre === activeGenre) {
+        langMap[movie.Language] = (langMap[movie.Language] || 0) + 1;
+      }
+    });
+
+    return { All: popularMovies.filter((m) => activeGenre === "All" || m.Genre === activeGenre).length, ...langMap };
+  };
+
+  const genreCounts = computeGenreCounts();
+  const languageCounts = computeLanguageCounts();
+
   useEffect(() => {
     if (popularMovies.length > 0) {
       const uniqueGenres = Array.from(new Set(popularMovies.map((m) => m.Genre)));
@@ -22,7 +49,6 @@ const ButtonFilters = () => {
     }
   }, [popularMovies]);
 
-  // Filter logic
   useEffect(() => {
     let filtered = [...popularMovies];
 
@@ -40,6 +66,7 @@ const ButtonFilters = () => {
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.group}>
+        <h3>Genres</h3>
         <div className={styles.filterGroup}>
           {genres.map((genre) => (
             <div
@@ -50,13 +77,14 @@ const ButtonFilters = () => {
               tabIndex={0}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveGenre(genre)}
             >
-              {genre}
+              {genre} ({genreCounts[genre] || 0})
             </div>
           ))}
         </div>
       </div>
 
       <div className={styles.group}>
+        <h3>Languages</h3>
         <div className={styles.filterGroup}>
           {languages.map((lang) => (
             <div
@@ -67,7 +95,7 @@ const ButtonFilters = () => {
               tabIndex={0}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveLanguage(lang)}
             >
-              {lang}
+              {lang} ({languageCounts[lang] || 0})
             </div>
           ))}
         </div>
