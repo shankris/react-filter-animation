@@ -1,0 +1,45 @@
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+.group {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+
+.group h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.filterBtn {
+  padding: 6px 12px;
+  background-color: #e6e6e6;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filterBtn:hover {
+  background-color: #a5c2ff;
+}
+
+.active {
+  background-color: #0e4783;
+  color: white;
+}
