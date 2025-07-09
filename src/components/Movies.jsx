@@ -9,7 +9,7 @@ const Movies = () => {
     <div className='movie-grid'>
       <AnimatePresence>
         {filteredMovie.map((movie, index) => {
-          const key = `${movie.Image}-${index}`;
+          const key = movie.Image;
           const lowRes = `/images/movies_LowRes/${movie.Image}.jpg`;
 
           return (
@@ -27,6 +27,7 @@ const Movies = () => {
                   src={lowRes}
                   alt={movie.Movie}
                   className='low-res'
+                  loading='lazy'
                 />
               </div>
               <div className='title'>{movie.Movie}</div>

@@ -2,6 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import { useEffect, useState, createContext } from "react";
 import ButtonFilters from "./components/ButtonFilters";
 import Movies from "./components/Movies";
+import "./App.css"; // <-- Ensure this is where your styles live
 
 export const MovieContext = createContext();
 
@@ -28,6 +29,10 @@ function App() {
   return (
     <MovieContext.Provider value={value}>
       <div className='app'>
+        {/* Full-width header */}
+        <header className='header'>🎬 200 Movies</header>
+
+        {/* Main layout below the header */}
         <div className='layout'>
           <aside className='sidebar'>
             <ButtonFilters />

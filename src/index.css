@@ -45,7 +45,7 @@ body {
 /* Grid Container */
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
   /* padding: 2rem; */
   justify-items: center;
@@ -125,6 +125,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  padding: 60px 0 0 0;
   flex-shrink: 0;
   background-color: #ddd;
 }
