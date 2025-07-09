@@ -49,3 +49,24 @@
   background-color: #0e4783;
   color: white;
 }
+
+.clearBtnWrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.clearBtn {
+  padding: 0.5rem 1rem;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.clearBtn:hover {
+  background-color: #222;
+}

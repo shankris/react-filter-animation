@@ -18,6 +18,12 @@ const ButtonFilters = () => {
   const [activeLanguage, setActiveLanguage] = useState("All Languages");
   const [activeDecade, setActiveDecade] = useState("All Decades");
 
+  const clearAllFilters = () => {
+    setActiveGenre("All Genres");
+    setActiveLanguage("All Languages");
+    setActiveDecade("All Decades");
+  };
+
   useEffect(() => {
     if (popularMovies.length > 0) {
       const uniqueGenres = Array.from(new Set(popularMovies.map((m) => m.Genre)));
@@ -88,6 +94,15 @@ const ButtonFilters = () => {
 
   return (
     <div className={styles.filterWrapper}>
+      <div className={styles.clearBtnWrapper}>
+        <button
+          className={styles.clearBtn}
+          onClick={clearAllFilters}
+        >
+          Clear All Filters
+        </button>
+      </div>
+
       <div className={styles.group}>
         <div className={styles.filterGroup}>
           {genres.map((genre) => (
