@@ -3,32 +3,33 @@
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  background: #f7f7f7;
+  background-color: #cfcfcf;
 }
 
 .app {
   text-align: center;
   max-width: 100%;
   margin: 0 auto;
-  background-color: #090d38;
+  background-color: #cfcfcf;
 }
 
 /* Button Filters */
 .button-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 4rem;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .button-wrapper>button {
-  height: 2rem;
+  width: 100%;
+  height: 2.5rem;
   padding: 0 1rem;
   cursor: pointer;
   border: none;
-  background: #e0e0e0;
   border-radius: 5px;
+  background: #e0e0e0;
+  text-align: left;
   transition: background 0.3s ease;
 }
 
@@ -115,4 +116,43 @@ body {
   color: #b7b2b2;
   background: #000921;
   text-align: left;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  flex-shrink: 0;
+  background-color: #ddd;
+}
+
+.main-content {
+  margin-left: 220px;
+  /* same as .sidebar width */
+  padding: 2rem;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    order: 1;
+  }
+
+  .main-content {
+    order: 2;
+    margin-left: 0;
+  }
 }

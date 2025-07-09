@@ -1,22 +1,22 @@
 import { AnimatePresence } from "framer-motion";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import ButtonFilters from "./components/ButtonFilters";
 import Movies from "./components/Movies";
 
-// Create context
 export const MovieContext = createContext();
-
-// Local movie data (assumes movies.json is inside /src/data)
-import localMovies from "./data/movies.json"; // keep JSON format unchanged
 
 function App() {
   const [popularMovies, setPopularMovies] = useState([]);
   const [filteredMovie, setFilteredMovie] = useState([]);
 
-  // Replaces the API fetch with local JSON load
   useEffect(() => {
-    setPopularMovies(localMovies);
-    setFilteredMovie(localMovies);
+    const fetchLocalMovies = async () => {
+      const response = await fetch("/data/movies.json");
+      const data = await response.json();
+      setPopularMovies(data);
+      setFilteredMovie(data);
+    };
+    fetchLocalMovies();
   }, []);
 
   const value = {
@@ -28,11 +28,15 @@ function App() {
   return (
     <MovieContext.Provider value={value}>
       <div className='app'>
-        <ButtonFilters />
-        <div className='image-container'>
-          <AnimatePresence>
-            <Movies />
-          </AnimatePresence>
+        <div className='layout'>
+          <aside className='sidebar'>
+            <ButtonFilters />
+          </aside>
+          <main className='main-content'>
+            <AnimatePresence>
+              <Movies />
+            </AnimatePresence>
+          </main>
         </div>
       </div>
     </MovieContext.Provider>

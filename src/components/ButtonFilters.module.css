@@ -21,22 +21,24 @@
 .filterGroup {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
+  /* justify-content: center; */
+  gap: 5px;
 }
 
 .filterBtn {
-  padding: 6px 12px;
-  background-color: #e6e6e6;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  display: block;
+  width: 100%;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-align: left;
+  background: #999898;
+  transition: background 0.3s ease;
 }
 
 .filterBtn:hover {
-  background-color: #a5c2ff;
+  background: #ccc;
 }
 
 .active {

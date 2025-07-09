@@ -40,23 +40,35 @@ const ButtonFilters = () => {
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.group}>
-        <h4>Filter by Genre</h4>
         <div className={styles.filterGroup}>
           {genres.map((genre) => (
-            <button key={genre} className={`${styles.filterBtn} ${genre === activeGenre ? styles.active : ""}`} onClick={() => setActiveGenre(genre)}>
+            <div
+              key={genre}
+              className={`${styles.filterBtn} ${genre === activeGenre ? styles.active : ""}`}
+              onClick={() => setActiveGenre(genre)}
+              role='button'
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveGenre(genre)}
+            >
               {genre}
-            </button>
+            </div>
           ))}
         </div>
       </div>
 
       <div className={styles.group}>
-        <h4>Filter by Language</h4>
         <div className={styles.filterGroup}>
           {languages.map((lang) => (
-            <button key={lang} className={`${styles.filterBtn} ${lang === activeLanguage ? styles.active : ""}`} onClick={() => setActiveLanguage(lang)}>
+            <div
+              key={lang}
+              className={`${styles.filterBtn} ${lang === activeLanguage ? styles.active : ""}`}
+              onClick={() => setActiveLanguage(lang)}
+              role='button'
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveLanguage(lang)}
+            >
               {lang}
-            </button>
+            </div>
           ))}
         </div>
       </div>
