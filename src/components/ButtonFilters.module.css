@@ -3,44 +3,48 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 1rem;
-  align-items: center;
+  align-items: stretch;
 }
 
 .group {
   width: 100%;
-  max-width: 900px;
-  text-align: center;
 }
 
 .group h4 {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   color: #333;
+  padding-left: 4px;
 }
 
 .filterGroup {
   display: flex;
-  flex-wrap: wrap;
-  /* justify-content: center; */
-  gap: 5px;
+  flex-direction: column;
+  gap: 4px;
 }
 
+/* Filter button */
 .filterBtn {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   font-size: 14px;
   cursor: pointer;
-  padding: 6px 12px;
+  padding: 6px;
   border-radius: 4px;
   text-align: left;
-  background: #999898;
+  background: #d3d3d3;
   transition: background 0.3s ease;
+  color: #5f5f5f;
 }
 
 .filterBtn:hover {
-  background: #ccc;
+  background: #bdbdbd;
+  color: black;
 }
 
+/* Active state */
 .active {
   background-color: #0e4783;
   color: white;
