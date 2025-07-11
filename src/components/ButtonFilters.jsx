@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { MovieContext } from "../App";
+import { ComicContext } from "../App";
 import styles from "./ButtonFilters.module.css";
 
-// Helper to extract decade from release year
-const getDecade = (dateString) => {
-  if (!dateString) return null;
-  const year = new Date(dateString).getFullYear();
+// Helper to extract decade from year
+const getDecade = (year) => {
+  if (!year) return null;
   return Math.floor(year / 10) * 10;
 };
 
 const ButtonFilters = () => {
-  const { popularMovies, setFilteredMovie } = useContext(MovieContext);
+  const { popularComics, setFilteredComic } = useContext(ComicContext);
 
   const [genres, setGenres] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -24,21 +23,22 @@ const ButtonFilters = () => {
     setActiveDecade("All Decades");
   };
 
+  // Extract unique genres and languages from the data
   useEffect(() => {
-    if (popularMovies.length > 0) {
-      const uniqueGenres = Array.from(new Set(popularMovies.map((m) => m.Genre)));
-      const uniqueLanguages = Array.from(new Set(popularMovies.map((m) => m.Language)));
+    if (popularComics.length > 0) {
+      const uniqueGenres = Array.from(new Set(popularComics.map((m) => m.series)));
+      const uniqueLanguages = Array.from(new Set(popularComics.map((m) => m.language)));
 
       setGenres(["All Genres", ...uniqueGenres]);
       setLanguages(["All Languages", ...uniqueLanguages]);
     }
-  }, [popularMovies]);
+  }, [popularComics]);
 
   const computeGenreCounts = () => {
     const genreMap = {};
-    popularMovies.forEach((movie) => {
-      if ((activeLanguage === "All Languages" || movie.Language === activeLanguage) && (activeDecade === "All Decades" || getDecade(movie.ReleaseDate)?.toString() === activeDecade)) {
-        genreMap[movie.Genre] = (genreMap[movie.Genre] || 0) + 1;
+    popularComics.forEach((comic) => {
+      if ((activeLanguage === "All Languages" || comic.language === activeLanguage) && (activeDecade === "All Decades" || getDecade(comic.year)?.toString() === activeDecade)) {
+        genreMap[comic.series] = (genreMap[comic.series] || 0) + 1;
       }
     });
     const total = Object.values(genreMap).reduce((a, b) => a + b, 0);
@@ -47,9 +47,9 @@ const ButtonFilters = () => {
 
   const computeLanguageCounts = () => {
     const langMap = {};
-    popularMovies.forEach((movie) => {
-      if ((activeGenre === "All Genres" || movie.Genre === activeGenre) && (activeDecade === "All Decades" || getDecade(movie.ReleaseDate)?.toString() === activeDecade)) {
-        langMap[movie.Language] = (langMap[movie.Language] || 0) + 1;
+    popularComics.forEach((comic) => {
+      if ((activeGenre === "All Genres" || comic.series === activeGenre) && (activeDecade === "All Decades" || getDecade(comic.year)?.toString() === activeDecade)) {
+        langMap[comic.language] = (langMap[comic.language] || 0) + 1;
       }
     });
     const total = Object.values(langMap).reduce((a, b) => a + b, 0);
@@ -58,9 +58,9 @@ const ButtonFilters = () => {
 
   const computeDecadeCounts = () => {
     const decadeMap = {};
-    popularMovies.forEach((movie) => {
-      if ((activeGenre === "All Genres" || movie.Genre === activeGenre) && (activeLanguage === "All Languages" || movie.Language === activeLanguage)) {
-        const decade = getDecade(movie.ReleaseDate);
+    popularComics.forEach((comic) => {
+      if ((activeGenre === "All Genres" || comic.series === activeGenre) && (activeLanguage === "All Languages" || comic.language === activeLanguage)) {
+        const decade = getDecade(comic.year);
         if (decade) {
           decadeMap[decade] = (decadeMap[decade] || 0) + 1;
         }
@@ -74,23 +74,24 @@ const ButtonFilters = () => {
   const languageCounts = computeLanguageCounts();
   const decadeCounts = computeDecadeCounts();
 
+  // Apply filters
   useEffect(() => {
-    let filtered = [...popularMovies];
+    let filtered = [...popularComics];
 
     if (activeGenre !== "All Genres") {
-      filtered = filtered.filter((movie) => movie.Genre === activeGenre);
+      filtered = filtered.filter((comic) => comic.series === activeGenre);
     }
 
     if (activeLanguage !== "All Languages") {
-      filtered = filtered.filter((movie) => movie.Language === activeLanguage);
+      filtered = filtered.filter((comic) => comic.language === activeLanguage);
     }
 
     if (activeDecade !== "All Decades") {
-      filtered = filtered.filter((movie) => getDecade(movie.ReleaseDate)?.toString() === activeDecade);
+      filtered = filtered.filter((comic) => getDecade(comic.year)?.toString() === activeDecade);
     }
 
-    setFilteredMovie(filtered);
-  }, [activeGenre, activeLanguage, activeDecade, popularMovies, setFilteredMovie]);
+    setFilteredComic(filtered);
+  }, [activeGenre, activeLanguage, activeDecade, popularComics, setFilteredComic]);
 
   return (
     <div className={styles.filterWrapper}>

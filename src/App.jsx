@@ -1,31 +1,31 @@
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState, createContext } from "react";
 import ButtonFilters from "./components/ButtonFilters";
-import Movies from "./components/Movies";
+import Comics from "./components/Comics";
 import Header from "./components/Header";
 import "./App.css";
 
-export const MovieContext = createContext();
+export const ComicContext = createContext();
 
 function App() {
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [filteredMovie, setFilteredMovie] = useState([]);
+  const [popularComics, setPopularComics] = useState([]);
+  const [filteredComic, setFilteredComic] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false); // ← Toggle for mobile sidebar
 
   useEffect(() => {
-    const fetchLocalMovies = async () => {
-      const response = await fetch("/data/movies.json");
+    const fetchLocalComics = async () => {
+      const response = await fetch("/data/comics.json");
       const data = await response.json();
-      setPopularMovies(data);
-      setFilteredMovie(data);
+      setPopularComics(data);
+      setFilteredComic(data);
     };
-    fetchLocalMovies();
+    fetchLocalComics();
   }, []);
 
   const value = {
-    popularMovies,
-    filteredMovie,
-    setFilteredMovie,
+    popularComics,
+    filteredComic,
+    setFilteredComic,
   };
 
   const handleToggleSidebar = () => {
@@ -33,7 +33,7 @@ function App() {
   };
 
   return (
-    <MovieContext.Provider value={value}>
+    <ComicContext.Provider value={value}>
       <div className='app'>
         <Header onToggleSidebar={handleToggleSidebar} />
 
@@ -51,12 +51,12 @@ function App() {
 
           <main className='main-content'>
             <AnimatePresence>
-              <Movies />
+              <Comics />
             </AnimatePresence>
           </main>
         </div>
       </div>
-    </MovieContext.Provider>
+    </ComicContext.Provider>
   );
 }
 
