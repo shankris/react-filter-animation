@@ -32,6 +32,7 @@ const ButtonFilters = () => {
       const uniqueLanguages = Array.from(new Set(popularComics.map((m) => m.language)));
 
       setGenres(["All Genres", ...uniqueGenres]);
+      // setGenres([...uniqueGenres]);
       setLanguages(["All Languages", ...uniqueLanguages]);
     }
   }, [popularComics]);
@@ -185,7 +186,7 @@ const ButtonFilters = () => {
             "All Decades",
             ...Object.keys(decadeCounts)
               .filter((d) => d !== "All Decades")
-              .sort((a, b) => Number(b) - Number(a)),
+              .sort((a, b) => Number(a) - Number(b)), // ← ascending order
           ].map((decade) => (
             <div
               key={decade}
@@ -207,12 +208,12 @@ const ButtonFilters = () => {
         <p className={styles.sortLabel}>Sort By:</p>
         <ul className={styles.sortList}>
           {[
+            { label: "Random", field: "random" },
             { label: "Name", field: "title" },
             { label: "Year", field: "year" },
             { label: "Series No.", field: "no" },
             { label: "Series", field: "series" },
             { label: "Language", field: "language" },
-            { label: "Random", field: "random" },
           ].map(({ label, field }) => {
             const isActive = sortOption.field === field;
             const isRandom = field === "random";
