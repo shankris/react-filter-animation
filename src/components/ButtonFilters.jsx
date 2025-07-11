@@ -17,13 +17,15 @@ const ButtonFilters = () => {
   const [activeLanguage, setActiveLanguage] = useState("All Languages");
   const [activeDecade, setActiveDecade] = useState("All Decades");
 
+  const [sortOption, setSortOption] = useState({ field: "random", direction: "asc" });
+
   const clearAllFilters = () => {
     setActiveGenre("All Genres");
     setActiveLanguage("All Languages");
     setActiveDecade("All Decades");
+    setSortOption({ field: "title", direction: "asc" });
   };
 
-  // Extract unique genres and languages from the data
   useEffect(() => {
     if (popularComics.length > 0) {
       const uniqueGenres = Array.from(new Set(popularComics.map((m) => m.series)));
@@ -74,7 +76,7 @@ const ButtonFilters = () => {
   const languageCounts = computeLanguageCounts();
   const decadeCounts = computeDecadeCounts();
 
-  // Apply filters
+  // Apply filters and sorting
   useEffect(() => {
     let filtered = [...popularComics];
 
@@ -90,8 +92,42 @@ const ButtonFilters = () => {
       filtered = filtered.filter((comic) => getDecade(comic.year)?.toString() === activeDecade);
     }
 
+    // Sorting
+    const { field, direction } = sortOption;
+
+    filtered.sort((a, b) => {
+      if (field === "random") return Math.random() - 0.5;
+
+      let valA = a[field];
+      let valB = b[field];
+
+      if (typeof valA === "string") valA = valA.toLowerCase();
+      if (typeof valB === "string") valB = valB.toLowerCase();
+
+      if (valA < valB) return direction === "asc" ? -1 : 1;
+      if (valA > valB) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
     setFilteredComic(filtered);
-  }, [activeGenre, activeLanguage, activeDecade, popularComics, setFilteredComic]);
+  }, [activeGenre, activeLanguage, activeDecade, popularComics, sortOption, setFilteredComic]);
+
+  const handleSortClick = (field) => {
+    if (field === "random") {
+      setSortOption({ field: "random", direction: "asc" });
+      return;
+    }
+
+    setSortOption((prev) => {
+      if (prev.field === field) {
+        return {
+          field,
+          direction: prev.direction === "asc" ? "desc" : "asc",
+        };
+      }
+      return { field, direction: "asc" };
+    });
+  };
 
   return (
     <div className={styles.filterWrapper}>
@@ -104,6 +140,7 @@ const ButtonFilters = () => {
         </button>
       </div>
 
+      {/* Genre Filter */}
       <div className={styles.group}>
         <div className={styles.filterGroup}>
           {genres.map((genre) => (
@@ -122,6 +159,7 @@ const ButtonFilters = () => {
         </div>
       </div>
 
+      {/* Language Filter */}
       <div className={styles.group}>
         <div className={styles.filterGroup}>
           {languages.map((lang) => (
@@ -140,6 +178,7 @@ const ButtonFilters = () => {
         </div>
       </div>
 
+      {/* Decade Filter */}
       <div className={styles.group}>
         <div className={styles.filterGroup}>
           {[
@@ -161,6 +200,40 @@ const ButtonFilters = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Sort by */}
+      <div className={styles.sortListWrapper}>
+        <p className={styles.sortLabel}>Sort By:</p>
+        <ul className={styles.sortList}>
+          {[
+            { label: "Name", field: "title" },
+            { label: "Year", field: "year" },
+            { label: "Series No.", field: "no" },
+            { label: "Series", field: "series" },
+            { label: "Language", field: "language" },
+            { label: "Random", field: "random" },
+          ].map(({ label, field }) => {
+            const isActive = sortOption.field === field;
+            const isRandom = field === "random";
+            const dirLabel = isActive && !isRandom ? (sortOption.direction === "asc" ? "Asc" : "Desc") : "";
+
+            return (
+              <li key={field}>
+                <a
+                  href='#'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSortClick(field);
+                  }}
+                  className={`${styles.filterBtn} ${isActive ? styles.active : ""}`}
+                >
+                  {label} {isRandom ? "" : `- ${dirLabel}`}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

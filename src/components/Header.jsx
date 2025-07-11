@@ -6,7 +6,7 @@ const Header = ({ onToggleSidebar }) => {
   return (
     <header className={styles.header}>
       <div className={styles.title}>
-        🎬 200 Movies <span>v0.2</span>
+        Comix <span>v0.1</span>
       </div>
       <button
         className={styles.menuButton}
