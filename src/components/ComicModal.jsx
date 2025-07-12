@@ -54,6 +54,7 @@ export default function ComicModal({ comic, onClose }) {
               className={styles.modal}
               layoutId={`card-${comic.key}`}
               ref={modalRef}
+              onClick={(e) => e.stopPropagation()} // ✅ Prevent bubbling to .modalWrapper
             >
               <img
                 src={comic.link}
