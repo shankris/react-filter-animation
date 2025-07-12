@@ -33,7 +33,24 @@ const ButtonFilters = () => {
 
       setGenres(["All Genres", ...uniqueGenres]);
       // setGenres([...uniqueGenres]);
-      setLanguages(["All Languages", ...uniqueLanguages]);
+      const sortedLanguages = ["English", ...uniqueLanguages.filter((lang) => lang !== "English")];
+
+      const languageList = ["All Languages", ...sortedLanguages];
+      setLanguages(languageList);
+
+      // Optional: default selection
+      if (uniqueLanguages.includes("English")) {
+        setActiveLanguage("English");
+      } else {
+        setActiveLanguage("All Languages");
+      }
+
+      // If English is available, make it the default; otherwise fallback to All Languages
+      if (uniqueLanguages.includes("English")) {
+        setActiveLanguage("English");
+      } else {
+        setActiveLanguage("All Languages");
+      }
     }
   }, [popularComics]);
 

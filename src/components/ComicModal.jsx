@@ -70,19 +70,20 @@ export default function ComicModal({ comic, onClose }) {
                 <div className={styles.rightPane}>
                   <h2>{comic.title}</h2>
 
-                  {Object.entries(comic).map(([key, value], index, array) => {
+                  {Object.entries(comic).map(([key, value]) => {
                     if (["key", "title", "link"].includes(key)) return null;
 
                     const label = key.replace(/([A-Z])/g, " $1").replace(/^./, (c) => c.toUpperCase());
 
-                    const isLast = index === array.length - 1;
+                    const isDescription = key === "description";
 
                     return (
                       <div
                         key={key}
-                        className={`${styles.detailRow} ${isLast ? styles.fullRow : ""}`}
+                        className={`${styles.detailRow} ${isDescription ? styles.fullRow : ""}`}
                       >
-                        <strong>{label}:</strong> <span>{value}</span>
+                        <strong>{label}:</strong>
+                        <span>{value}</span>
                       </div>
                     );
                   })}
