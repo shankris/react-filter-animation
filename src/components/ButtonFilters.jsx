@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ComicContext } from "../App";
 import styles from "./ButtonFilters.module.css";
+import Ripple from "./Ripple";
 
 // Helper to extract decade from year
 const getDecade = (year) => {
@@ -150,12 +151,14 @@ const ButtonFilters = () => {
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.clearBtnWrapper}>
-        <button
+        <Ripple
+          as='button'
           className={styles.clearBtn}
           onClick={clearAllFilters}
+          rippleColor='rgba(0, 0, 0, 0.3)'
         >
           Clear All Filters
-        </button>
+        </Ripple>
       </div>
 
       {/* Genre Filter */}

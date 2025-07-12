@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./ComicModal.module.css";
+import Ripple from "./Ripple";
 
 export default function ComicModal({ comic, onClose }) {
   const modalRef = useRef();
@@ -88,12 +89,19 @@ export default function ComicModal({ comic, onClose }) {
                     );
                   })}
 
-                  <button
+                  <Ripple
+                    as='button'
                     className={styles.closeButton}
-                    onClick={onClose}
+                    onClick={() => {
+                      // ⏱️ Delay closing the modal by ~300–400ms to allow ripple to complete
+                      setTimeout(() => {
+                        onClose();
+                      }, 300); // match with ripple duration in CSS
+                    }}
+                    rippleColor='rgba(255, 255, 255, 0.4)' // lighter ripple
                   >
                     Close
-                  </button>
+                  </Ripple>
                 </div>
               </div>
             </motion.div>
