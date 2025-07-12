@@ -54,15 +54,48 @@ export default function ComicModal({ comic, onClose }) {
               className={styles.modal}
               layoutId={`card-${comic.key}`}
               ref={modalRef}
-              onClick={(e) => e.stopPropagation()} // ✅ Prevent bubbling to .modalWrapper
+              onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={comic.link}
-                alt={comic.title}
-              />
-              <h2>{comic.title}</h2>
-              {comic.description && <p>{comic.description}</p>}
-              <button onClick={onClose}>Close</button>
+              <div className={styles.modalContent}>
+                {/* Left section */}
+                <div className={styles.leftPane}>
+                  <img
+                    src={comic.link}
+                    alt={comic.title}
+                    className={styles.coverImage}
+                  />
+                </div>
+
+                {/* Right section */}
+                <div className={styles.rightPane}>
+                  <h2>{comic.title}</h2>
+
+                  {Object.entries(comic).map(([key, value]) => {
+                    if (["key", "title", "link"].includes(key)) return null;
+
+                    // Capitalize and format key for display
+                    const label = key
+                      .replace(/([A-Z])/g, " $1") // camelCase → camel Case
+                      .replace(/^./, (c) => c.toUpperCase()); // first letter uppercase
+
+                    return (
+                      <div
+                        key={key}
+                        className={styles.detailRow}
+                      >
+                        <strong>{label}:</strong> <span>{value}</span>
+                      </div>
+                    );
+                  })}
+
+                  <button
+                    className={styles.closeButton}
+                    onClick={onClose}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </>
