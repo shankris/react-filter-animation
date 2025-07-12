@@ -6,7 +6,7 @@ const Header = ({ onToggleSidebar }) => {
   return (
     <header className={styles.header}>
       <div className={styles.title}>
-        Comix <span>v0.1</span>
+        200<span className={styles.second}>Comics</span> <span>v0.1</span>
       </div>
       <button
         className={styles.menuButton}

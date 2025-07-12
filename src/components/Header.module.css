@@ -15,8 +15,15 @@
 }
 
 .title {
-  font-size: 1.2rem;
-  font-weight: 200;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.title span.second {
+  font-weight: 300;
+  color: #cacaca;
+  font-size: 24px;
+  text-transform: uppercase;
 }
 
 .title span {
