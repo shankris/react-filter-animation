@@ -12,11 +12,16 @@
   left: 0;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  flex-wrap: wrap;
+  /* Ensures responsiveness on small screens */
 }
 
 .title {
   font-size: 24px;
   font-weight: 600;
+  white-space: nowrap;
+  color: #203060;
 }
 
 .title span.second {
@@ -32,6 +37,14 @@
   color: #ccc;
 }
 
+.searchContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 200px;
+  max-width: 400px;
+}
+
 .menuButton {
   background: none;
   border: none;
@@ -41,10 +54,20 @@
   margin: 0 10px 0 0;
 }
 
-
 /* Show menu button only below 768px */
 @media (max-width: 768px) {
   .menuButton {
     display: block;
+  }
+
+  .searchContainer {
+    width: 100%;
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+
+  .header {
+    height: auto;
+    padding: 0.5rem;
   }
 }
